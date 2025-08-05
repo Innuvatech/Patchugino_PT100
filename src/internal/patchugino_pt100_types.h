@@ -58,5 +58,44 @@ namespace PatchuginoPT100 {
         bool is3Wire;
         uint32_t configReg;
     }PT100ConfigStruct;
+
+    /**
+    * @brief PT100 Filter
+    * 
+    */
+    enum class PT100Filter {
+        PT100_FILTER_50Hz = (0x01U << 0),
+        PT100_FILTER_60Hz = (0x00U << 0),
+    };
+
+    //Utility constant expressions to ease use of enum class of PT100Filter
+    static constexpr PT100Filter PT100_FILTER_50Hz = PT100Filter::PT100_FILTER_50Hz;
+    static constexpr PT100Filter PT100_FILTER_60Hz = PT100Filter::PT100_FILTER_60Hz;
+
+    /**
+    * @brief PT100 Conversion mode
+    * 
+    */
+    enum class PT100ConversionMode {
+        PT100_CONVERSION_OFF = (0x00U << 6),
+        PT100_CONVERSION_AUTO = (0x01U << 6),
+    };
+
+    //Utility constant expressions to ease use of enum class of PT100ConversionMode
+    static constexpr PT100ConversionMode PT100_CONVERSION_OFF = PT100ConversionMode::PT100_CONVERSION_OFF;
+    static constexpr PT100ConversionMode PT100_CONVERSION_AUTO = PT100ConversionMode::PT100_CONVERSION_AUTO;
+
+    /**
+    * @brief PT100 Vbias
+    * 
+    */
+    enum class PT100Vbias {
+        PT100_VBIAS_OFF = (0x00U << 7),
+        PT100_VBIAS_ON = (0x01U << 7),
+    };
+
+    //Utility constant expressions to ease use of enum class of PT100Vbias
+    static constexpr PT100Vbias PT100_VBIAS_OFF = PT100Vbias::PT100_VBIAS_OFF;
+    static constexpr PT100Vbias PT100_VBIAS_ON = PT100Vbias::PT100_VBIAS_ON;
 }
 

@@ -28,6 +28,17 @@ namespace PatchuginoPT100 {
             * @return uint32_t Pin value
             */
             uint32_t PT100Cs_ToUint(PT100Cs cs);
+
+            /**
+            * @brief This functions gives the CS active level
+            * from the specified pt100N. This is because depending on  which
+            * PT100 is being used the CS active level changes
+            * 
+            * @param pt100N PT100 number
+            * @return uint8_t CS Active level
+            */
+            uint8_t PT100N_ToCsLevel(PT100N pt100N);
+
         public:
             /**
             * @brief Initializes the Patchugino_PT100 board
@@ -40,5 +51,8 @@ namespace PatchuginoPT100 {
             * will not be visible!
             */
             void Init(PT100Cs cs, HardwareSerial& serial = Serial, PatchugoLogLevel logLevel = LOG_LEVEL_VERBOSE);
+
+            //TODO
+            void Configure(PT100N pt100N, PT100Type pt100Type);
     };
 }
