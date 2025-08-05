@@ -51,8 +51,8 @@ namespace PatchuginoPT100 {
 
     //Utility constant expressions to ease use of enum class of PT100Type
     static constexpr PT100Type PT100_2WIRE = PT100Type::PT100_2WIRE;
-    static constexpr PT100Type PT100_3WIRE = PT100Type::PT100_2WIRE;
-    static constexpr PT100Type PT100_4WIRE = PT100Type::PT100_2WIRE;
+    static constexpr PT100Type PT100_3WIRE = PT100Type::PT100_3WIRE;
+    static constexpr PT100Type PT100_4WIRE = PT100Type::PT100_4WIRE;
 
     typedef struct {
         bool is3Wire;
