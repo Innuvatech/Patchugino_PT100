@@ -21,6 +21,8 @@ namespace PatchuginoPT100 {
             PT100ConfigStruct pt100_0; /*!< PT100 of connector CN1*/
             PT100ConfigStruct pt100_1; /*!< PT100 of connector CN3*/
             Patchugo_Logger* logger = nullptr;
+            static constexpr float R_REFERENCE = 430.0f; /*!< Resistance value used in temperature calculation*/
+            static constexpr float RTD_MAX_VAL = 32768.0f; /*!< Used in temperature calculation*/
             /**
             * @brief Converts a member if @ref PT100Cs to
             * its corresponding pin value
@@ -54,5 +56,13 @@ namespace PatchuginoPT100 {
 
             //TODO
             void Configure(PT100N pt100N, PT100Type pt100Type);
+
+            /**
+            * @brief Reads a PT100 sensor and returns the temperature
+            * 
+            * @param pt100N PT100 to read
+            * @return float Temperature read in celsius
+            */
+            float Read(PT100N pt100N);
     };
 }

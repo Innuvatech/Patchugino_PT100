@@ -96,3 +96,49 @@ void Patchugino_PT100::Configure(PT100N pt100N, PT100Type pt100Type) {
     SPI.endTransaction();
     digitalWrite(csUsed, !csActiveLevel);
 }
+
+float Patchugino_PT100::Read(PT100N pt100N) {
+
+    PT100ConfigStruct* target = nullptr;
+
+    switch(pt100N) {
+        case PT100_N_0:
+            target = &pt100_0;
+            break;
+        case PT100_N_1:
+            target = &pt100_1;
+            break;
+        default:
+            break;
+    }
+
+    //Reset one-shot for current read
+    target->configReg |= static_cast<uint8_t>(0x01U << 5);
+
+    uint8_t csActiveLevel = PT100N_ToCsLevel(pt100N);
+
+    digitalWrite(csUsed, csActiveLevel);
+    SPI.beginTransaction(pt100SpiSettings);
+    SPI.transfer(0x80);
+    SPI.transfer(target->configReg);
+    SPI.endTransaction();
+    digitalWrite(csUsed, !csActiveLevel);
+
+    uint8_t msb = 0;
+    uint8_t lsb = 0;
+
+    digitalWrite(csUsed, csActiveLevel);
+    SPI.beginTransaction(pt100SpiSettings);
+    SPI.transfer(0x01);
+    msb = SPI.transfer(0x00);
+    lsb = SPI.transfer(0x00);
+    SPI.endTransaction();
+    digitalWrite(csUsed, !csActiveLevel);
+
+    uint16_t rtd_data = ((uint16_t)msb << 8 | lsb) >> 1;
+    float resistance = (float)rtd_data * R_REFERENCE / RTD_MAX_VAL;
+    float temperature = (resistance - 100.0f) / 0.385f;
+
+    logger->Log_Info("RTD VAL: %d\n", rtd_data);
+    return temperature;
+}
