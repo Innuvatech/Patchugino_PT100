@@ -30,25 +30,26 @@ void setup() {
   Serial.begin(115200);
   
   //Initialize the PT100 shield board and specify which CS it's using(CS0 in this case)
-  patchuginoPt100.Init(PT100_CS_0);
+  //This will disable logs of the library. A valid Serial instance still needs to be provided
+  patchuginoPt100.Init(PT100_CS_0, Serial, LOG_LEVEL_NONE);
 
-  //Configure library to use PT100_N_0 as 2WIRE
+  //Configure library to use PT100_N_0(CN3) as 2WIRE
   patchuginoPt100.Configure(PT100_N_0, PT100_2WIRE);
 
-  //Configure library to use PT100_N_1 as 3WIRE
+  //Configure library to use PT100_N_1(CN0) as 3WIRE
   patchuginoPt100.Configure(PT100_N_1, PT100_3WIRE);
 
 }
 
 void loop() {
   
-  //Read temperature from PT100_N_0
+  //Read temperature from PT100_N_0 and prints it
   float temp = patchuginoPt100.Read(PT100_N_0);
   Serial.print("SENSOR 1: ");
   Serial.println(temp);
   delay(500);
 
-  //Read temperature from PT100_N_1
+  //Read temperature from PT100_N_1 and prints it
   float temp2 = patchuginoPt100.Read(PT100_N_1);
   Serial.print("SENSOR 2: ");
   Serial.println(temp2);
